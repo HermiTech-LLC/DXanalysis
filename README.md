@@ -1,5 +1,5 @@
 # Advanced DXing with Python and Rust Integration
-
+![dxwave](https://github.com/HermiTech-LLC/DXanalysis/blob/main/Dxwave.PNG)
 ## Overview
 This initiative offers a sophisticated approach to DXing (Distant Signal Reception), merging Python's versatile data manipulation and analysis capabilities with Rust's high-performance signal processing proficiency.
 
