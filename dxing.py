@@ -1,8 +1,24 @@
 import ctypes
 import numpy as np
+import logging
+import asyncio
+from configparser import ConfigParser
 
-# Load the Rust shared library
-rust_lib = ctypes.CDLL('path_to_your_compiled_rust_library.so')
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Load configuration
+config = ConfigParser()
+config.read('config.ini')
+lib_path = config.get('DEFAULT', 'RustLibPath', fallback='path_to_your_compiled_rust_library.so')
+
+# Load the Rust shared library with error handling
+try:
+    rust_lib = ctypes.CDLL(lib_path)
+except OSError as e:
+    logger.error(f"Failed to load Rust library: {e}")
+    raise
 
 # Define the interface to the Rust function
 process_data = rust_lib.process_data
@@ -10,22 +26,28 @@ process_data.argtypes = [np.ctypeslib.ndpointer(ctypes.c_double, flags="C_CONTIG
                          ctypes.c_size_t]
 process_data.restype = None
 
-def dxing_process(input_signal):
+async def dxing_process(input_signal):
     """
     Process the input radio signal for DXing using Rust and Python.
-    :param input_signal: A numpy array of the input signal data.
+    This function is now asynchronous for better performance with IO-bound tasks.
+    :param input_signal: numpy array of input signal data
+    :return: Processed signal data
     """
-    # Convert signal to appropriate format if needed
-    input_signal = np.array(input_signal, dtype=np.float64)
+    try:
+        if not isinstance(input_signal, np.ndarray):
+            raise ValueError("Input signal must be a numpy array")
 
-    # Process the signal using Rust
-    process_data(input_signal, input_signal.size)
+        # Assuming the input_signal is a numpy array of type double
+        # The process_data Rust function is called here
+        process_data(input_signal, len(input_signal))
 
-    # Further processing or visualization in Python
-    # ...
+        # Placeholder for additional processing or IO-bound tasks
+        # Use asyncio for asynchronous execution of these tasks
+        await asyncio.sleep(0)  # Example of an async call
 
-if __name__ == "__main__":
-    # Example usage
-    # Replace this with actual signal data acquisition
-    test_signal = np.random.randn(1000)  # Example signal
-    dxing_process(test_signal)
+        return input_signal  # Returning the processed signal
+    except Exception as e:
+        logger.error(f"Error in dxing_process: {e}")
+        raise
+
+# Additional functions and logic can be added here for more complex operations
