@@ -1,0 +1,10 @@
+[package]
+name = "dxing_lib"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+
+[lib]
+name = "dxing_lib"
+crate-type = ["cdylib"]
