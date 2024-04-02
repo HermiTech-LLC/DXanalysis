@@ -1,32 +1,32 @@
-# DXing Radio Waves with Python and Rust
+# Advanced DXing with Python and Rust Integration
 
 ## Overview
-This project provides a framework for DXing radio waves using a combination of Python and Rust. Python is used for high-level control and data analysis, while Rust is employed for efficient low-level signal processing.
+This initiative offers a sophisticated approach to DXing (Distant Signal Reception), merging Python's versatile data manipulation and analysis capabilities with Rust's high-performance signal processing proficiency.
 
-## Requirements
-- Rust Programming Language
-- Python 3.7 or higher
-- PySDR (or similar SDR Python library)
+## Prerequisites
+- Rust Language Environment
+- Python 3.7+
+- Software Defined Radio (SDR) Python library (e.g., PySDR)
 
-## Installation
+## Setup
 
-### Rust Library
-- Navigate to the Rust project directory.
-- Run `cargo build --release` to compile the Rust code into a shared library.
+### Compiling the Rust Library
+1. Access the Rust project's root directory.
+2. Execute `cargo build --release` to compile into a shared library.
 
-### Python
-- Ensure all Python dependencies are installed via `pip`.
+### Preparing the Python Environment
+- Install Python dependencies using `pip install -r requirements.txt`.
 
-## Usage
-- Use `dxing.py` to start the program.
-- The script interacts with an SDR to acquire radio signals and processes them using the Rust library.
+## Operation Guide
+- Initiate the DXing application by running `dxing.py`.
+- The script cooperates with an SDR for signal acquisition, followed by Rust-enhanced processing.
 
-## Structure
-- `dxing.py`: Main Python script for DXing.
-- `lib.rs`: Rust library for efficient signal processing.
-- `Cargo.toml`: Configuration for Rust compilation.
+## Architectural Details
+- `dxing.py`: Principal Python script orchestrating the DXing process.
+- `lib.rs`: Dedicated Rust library tailored for high-speed signal processing.
+- `Cargo.toml`: Rust build configuration file.
 
-## Enhancements
-- Implement specific modulation/demodulation techniques in Rust.
-- Expand Python script for better data visualization and user interaction.
-- Include error handling and logging for robust operation.
+## Future Directions
+- Integrate advanced modulation and demodulation methods in Rust for diverse signal types.
+- Enhance the Python interface for superior data visualization and interactive functionalities.
+- Incorporate comprehensive error management and detailed logging to ensure reliability and ease of debugging.
