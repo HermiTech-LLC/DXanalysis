@@ -23,8 +23,8 @@ This initiative offers a sophisticated approach to DXing (Distant Signal Recepti
 
 ## Architectural Details
 - `dxing.py`: Principal Python script orchestrating the DXing process.
-- `lib.rs`: Dedicated Rust library tailored for high-speed signal processing.
-- `Cargo.toml`: Rust build configuration file.
+- `src/lib.rs`: Dedicated Rust library tailored for high-speed signal processing.
+- `src/Cargo.toml`: Rust build configuration file.
 
 ## Future Directions
 - Integrate advanced modulation and demodulation methods in Rust for diverse signal types.
