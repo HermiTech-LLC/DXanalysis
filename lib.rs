@@ -1,6 +1,8 @@
 use std::slice;
 use log::{error, info};
 use rustfft::{FftPlanner, num_complex::Complex};
+use serde_json::json;
+use reqwest;
 
 fn apply_moving_average_filter(data: &mut [f64], window_size: usize) {
     let mut filtered_data = vec![0.0; data.len()];
@@ -27,11 +29,22 @@ fn apply_fft(data: &mut [f64]) {
     }
 }
 
-fn apply_ml_pattern_recognition(data: &[f64]) {
-    // Placeholder for a ML-based pattern recognition implementation
-    // Example: data analysis, classification, anomaly detection, etc.
-    // This could involve feeding data into a trained model
-    // Implementation details depend on specific ML requirements and model
+fn apply_ml_pattern_recognition(data: &[f64]) -> Result<(), reqwest::Error> {
+    let data_json = json!({ "data": data });
+
+    let client = reqwest::blocking::Client::new();
+    let res = client.post("http://your_ml_model_api_endpoint")
+        .json(&data_json)
+        .send()?;
+
+    if res.status().is_success() {
+        let response_data = res.json::<serde_json::Value>()?;
+        info!("Pattern recognition successful: {:?}", response_data);
+    } else {
+        error!("Pattern recognition failed");
+    }
+
+    Ok(())
 }
 
 #[no_mangle]
@@ -46,7 +59,11 @@ pub extern "C" fn process_data(data_ptr: *mut f64, data_len: usize) -> bool {
 
     apply_moving_average_filter(data, 5);
     apply_fft(data);
-    apply_ml_pattern_recognition(data);
+
+    if let Err(e) = apply_ml_pattern_recognition(data) {
+        error!("Error in ML pattern recognition: {:?}", e);
+        return false;
+    }
 
     info!("Data processing completed successfully");
     true
