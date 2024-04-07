@@ -33,7 +33,7 @@ fn apply_ml_pattern_recognition(data: &[f64]) -> Result<(), reqwest::Error> {
     let data_json = json!({ "data": data });
 
     let client = reqwest::blocking::Client::new();
-    let res = client.post("http://your_ml_model_api_endpoint")
+    let res = client.post("http://the_ml_model_api_endpoint")
         .json(&data_json)
         .send()?;
 
