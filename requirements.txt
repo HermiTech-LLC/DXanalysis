@@ -1,0 +1,5 @@
+wxPython
+numpy
+ctypes
+configparser
+logging
